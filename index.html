@@ -289,7 +289,7 @@ main{flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1fr) 380px;
         <button id="mClearIcs">가져온 일정만 모두 삭제</button>
       </div>
     </div>
-    <span class="cheer">오늘도 수고했어요.</span>
+    <span class="cheer">오늘도 수고했다 짜식들아.</span>
     <input type="file" id="jsonFile" accept=".json,application/json" hidden>
   </header>
   <main>
@@ -310,7 +310,7 @@ main{flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1fr) 380px;
           <button class="mini" id="memoAdd">+ 새 메모</button>
         </div>
         <div class="mlist" id="memoList"></div>
-        <div class="mwarn">오늘도 힘내고, 이번주도 힘내고, 올해도 힘내요.</div>
+        <div class="mwarn">오늘도 뺑이치고, 이번주도 뺑이치고, 소주나 마시자</div>
       </div>
     </aside>
   </main>
@@ -665,9 +665,11 @@ var HOL={
 };
 var HOL_FIXED={'01-01':'신정','03-01':'삼일절','05-01':'노동절','05-05':'어린이날','06-06':'현충일','07-17':'제헌절','08-15':'광복절','10-03':'개천절','10-09':'한글날','12-25':'성탄절'};
 function holName(d){   // d='YYYY-MM-DD' → 공휴일 이름 또는 ''
-  var y=+d.slice(0,4),md=d.slice(5);
-  if(HOL[y])return HOL[y][md]||'';
-  return y>2028?(HOL_FIXED[md]||''):'';   // 2029년~: 양력 고정 공휴일만 (설날·추석 등은 데이터 추가 필요)
+  var y=+d.slice(0,4),md=d.slice(5),n='';
+  if(HOL[y])n=HOL[y][md]||'';
+  else if(y>2028)n=HOL_FIXED[md]||'';   // 2029년~: 양력 고정 공휴일만 (설날·추석 등은 데이터 추가 필요)
+  if(md==='02-07')n=n?'이시윤님 탄생일 · '+n:'이시윤님 탄생일';
+  return n;
 }
 function eventsOn(d){
   return S.events.filter(function(e){return d>=e.date&&d<=(e.endDate||e.date)}).sort(function(a,b){
